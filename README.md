@@ -15,7 +15,7 @@ Add FOSElasticaBundle to your application's `composer.json` file:
 ```json
 {
     "require": {
-        "friendsofsymfony/elastica-bundle": "~2.0"
+        "friendsofsymfony/elastica-bundle": "3.0.*@dev"
     }
 }
 ```
@@ -93,7 +93,7 @@ Most of the time, you will need only one.
             default: { host: localhost, port: 9200 }
         serializer:
             callback_class: FOS\ElasticaBundle\Serializer\Callback
-            id: serializer
+            serializer: serializer
         indexes:
             website:
                 client: default
@@ -126,7 +126,7 @@ Elasticsearch type is comparable to Doctrine entity repository.
             default: { host: localhost, port: 9200 }
         serializer:
             callback_class: FOS\ElasticaBundle\Serializer\Callback
-            id: serializer
+            serializer: serializer
         indexes:
             website:
                 client: default
@@ -150,7 +150,7 @@ per type.
             default: { host: localhost, port: 9200 }
         serializer:
             callback_class: %classname%
-            id: serializer
+            serializer: serializer
         indexes:
             website:
                 client: default
@@ -170,8 +170,8 @@ per type.
         clients:
             default: { host: localhost, port: 9200 }
         serializer:
-            callback_class_class: FOS\ElasticaBundle\Serializer\Callback
-            id: serializer
+            callback_class: FOS\ElasticaBundle\Serializer\Callback
+            serializer: serializer
         indexes:
             website:
                 client: default
@@ -189,7 +189,7 @@ per type.
             default: { host: localhost, port: 9200 }
         serializer:
             callback_class: FOS\ElasticaBundle\Serializer\Callback
-            id: serializer
+            serializer: serializer
         indexes:
             website:
                 client: default
@@ -227,7 +227,7 @@ some configuration will let ElasticaBundle do it for us.
             default: { host: localhost, port: 9200 }
         serializer:
             callback_class: FOS\ElasticaBundle\Serializer\Callback
-            id: serializer
+            serializer: serializer
         indexes:
             website:
                 client: default
@@ -348,7 +348,7 @@ Declare that you want a Doctrine/Propel finder in your configuration:
             default: { host: localhost, port: 9200 }
         serializer:
             callback_class: FOS\ElasticaBundle\Serializer\Callback
-            id: serializer
+            serializer: serializer
         indexes:
             website:
                 client: default
@@ -577,19 +577,19 @@ You can also choose to only listen for some of the events:
 If you use listeners to update your index, you may need to validate your
 entities before you index them (e.g. only index "public" entities). Typically,
 you'll want the listener to be consistent with the provider's query criteria.
-This may be achieved by using the `is_indexable_callback_class` config parameter:
+This may be achieved by using the `is_indexable_callback` config parameter:
 
                         persistence:
                             listener:
-                                is_indexable_callback_class: "isPublic"
+                                is_indexable_callback: "isPublic"
 
-If `is_indexable_callback_class` is a string and the entity has a method with the
+If `is_indexable_callback` is a string and the entity has a method with the
 specified name, the listener will only index entities for which the method
 returns `true`. Additionally, you may provide a service and method name pair:
 
                         persistence:
                             listener:
-                                is_indexable_callback_class: [ "%custom_service_id%", "isIndexable" ]
+                                is_indexable_callback: [ "%custom_service_id%", "isIndexable" ]
 
 In this case, the callback_class will be the `isIndexable()` method on the specified
 service and the object being considered for indexing will be passed as the only
